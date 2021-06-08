@@ -29,7 +29,10 @@ pipeline {
         stage('CodeCheck'){
             // sonar_scanner for code static checking
             withSonarQubeEnv('sonar') {
-                def scannerHome = tool 'SonarScanner 4.0';
+               script {
+                  // requires SonarQube Scanner 4.0+
+                  scannerHome = tool 'SonarQube Scanner 4.0'
+                }
                 sh """
                 ${scannerHome}/bin/sonar-scanner \
                 -Dsonar.projectKey=simple-node-js-react-npm-app \
@@ -43,7 +46,7 @@ pipeline {
         post {
             always {
                  emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
-               }
+            }
         }
         stage('Deliver') {
             when {
