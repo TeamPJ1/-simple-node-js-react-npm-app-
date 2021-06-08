@@ -14,6 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm install'
+                mail bcc: '', body: 'message', cc: '', from: '', replyTo: '', subject: 'subject', to: 'adm.sokray@gmail.com'
             }
         }
         stage('Test') {
@@ -21,7 +22,7 @@ pipeline {
                 sh "chmod +x -R ${env.WORKSPACE}"
                 sh "ls -l ${env.WORKSPACE}"
                 sh './jenkins/scripts/test.sh'
-                step([$class: 'Mailer', recipients: 'admin@somewhere'])
+                step([$class: 'Mailer', recipients: 'adm.sokray@gmail.com'])
             }
           
         }
