@@ -54,7 +54,7 @@ pipeline {
                 ok "Yes"
                 submitter "alice,bob"
                 parameters {
-                    boolean(name: 'DEPLOY', defaultValue: 'false', description: 'Approuve ?')
+                    booleanParam(name: 'DEPLOY', defaultValue: 'false', description: 'Approuve ?')
                     string(name: 'COMMENT', defaultValue: 'comment here', description: 'Comment')
                 }
             }
