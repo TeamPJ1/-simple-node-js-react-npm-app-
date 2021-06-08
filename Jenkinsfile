@@ -25,6 +25,20 @@ pipeline {
             }
           
         }
+
+        stage('CodeCheck'){
+            // sonar_scanner for code static checking
+            withSonarQubeEnv('sonar') {
+                sh """
+                sonar-scanner \
+                -Dsonar.projectKey=simple-node-js-react-npm-app \
+                -Dsonar.sources=src/ \
+                -Dsonar.host.url=http://localhost:9000 \
+                -Dsonar.login=94a6019acc61837c98d7f182e5169503d01d238b
+                """
+            }
+        }
+      
         post {
             always {
                  emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
