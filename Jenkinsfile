@@ -21,9 +21,23 @@ pipeline {
                 sh "chmod +x -R ${env.WORKSPACE}"
                 sh "ls -l ${env.WORKSPACE}"
                 sh './jenkins/scripts/test.sh'
+                step([$class: 'Mailer', recipients: 'admin@somewhere'])
             }
         }
+     
         stage('Deliver') {
+            when {
+                branch 'main'
+                environment name: 'DEPLOY_TO', value: 'production'
+            }
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "alice,bob"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                }
+            }
             steps {
                 sh "chmod +x -R ${env.WORKSPACE}"
                 sh './jenkins/scripts/deliver.sh'
