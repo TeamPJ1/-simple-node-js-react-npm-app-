@@ -23,8 +23,13 @@ pipeline {
                 sh './jenkins/scripts/test.sh'
                 step([$class: 'Mailer', recipients: 'admin@somewhere'])
             }
+          
         }
-     
+        post {
+            always {
+                 emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+               }
+        }
         stage('Deliver') {
             when {
                 branch 'main'
