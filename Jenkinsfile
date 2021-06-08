@@ -29,6 +29,7 @@ pipeline {
         stage('CodeCheck'){
             // sonar_scanner for code static checking
             withSonarQubeEnv('sonar') {
+                def scannerHome = tool 'SonarScanner 4.0';
                 sh """
                 sonar-scanner \
                 -Dsonar.projectKey=simple-node-js-react-npm-app \
