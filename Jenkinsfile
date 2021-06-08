@@ -31,11 +31,12 @@ pipeline {
                 environment name: 'DEPLOY_TO', value: 'production'
             }
             input {
-                message "Should we continue?"
-                ok "Yes, we should."
+                message "Should we continue to deploy?"
+                ok "Yes"
                 submitter "alice,bob"
                 parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                    boolean(name: 'DEPLOY', defaultValue: 'false', description: 'Approuve ?')
+                    string(name: 'COMMENT', defaultValue: 'comment here', description: 'Comment')
                 }
             }
             steps {
