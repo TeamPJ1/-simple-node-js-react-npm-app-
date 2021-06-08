@@ -52,7 +52,7 @@ pipeline {
             input {
                 message "Should we continue to deploy?"
                 ok "Yes"
-                submitter "alice,bob"
+                submitter "admin"
                 parameters {
                     booleanParam(name: 'DEPLOY', defaultValue: 'false', description: 'Approuve ?')
                     string(name: 'COMMENT', defaultValue: 'comment here', description: 'Comment')
