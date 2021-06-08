@@ -28,19 +28,21 @@ pipeline {
         }
 
         stage('CodeCheck'){
+            steps {
             // sonar_scanner for code static checking
-            withSonarQubeEnv('sonar') {
-               script {
-                  // requires SonarQube Scanner 4.0+
-                  scannerHome = tool 'SonarQube Scanner 4.0'
-                }
-                sh """
-                ${scannerHome}/bin/sonar-scanner \
-                -Dsonar.projectKey=simple-node-js-react-npm-app \
-                -Dsonar.sources=src/ \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.login=94a6019acc61837c98d7f182e5169503d01d238b
-                """
+               withSonarQubeEnv('sonar') {
+                    script {
+                      // requires SonarQube Scanner 4.0+
+                      scannerHome = tool 'SonarQube Scanner 4.0'
+                     }
+                    sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=simple-node-js-react-npm-app \
+                    -Dsonar.sources=src/ \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.login=94a6019acc61837c98d7f182e5169503d01d238b
+                    """
+              }
             }
         }
       
